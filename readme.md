@@ -10,9 +10,13 @@ All code should be considered alpha-quality.
 
 # Examples
 
+### opencv
+
+Color detection and shape tracking using OpenCV.
+
 ### opencv-nodejs-browser
 
-Shape detection in the browser using WebRTC sent to OpenCV via node-opencv
+Shape detection in the browser using WebRTC sent to OpenCV via node-opencv.
 
 # Contributing
 
