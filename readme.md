@@ -8,6 +8,12 @@ It was created by [The Concord Consortium](http://www.concord.org) for the
 
 All code should be considered alpha-quality.
 
+# Examples
+
+### opencv-nodejs-browser
+
+Shape detection in the browser using WebRTC sent to OpenCV via node-opencv
+
 # Contributing
 
 If you would like to add an example or improve upon an existing example,
