@@ -12,27 +12,37 @@ app = require('http').createServer (req, res) ->
     res.end data
 
 io = require('socket.io').listen(app).on 'connection', (socket) ->
-  socket.on 'frame', ({data, lowThresh, highThresh, nIters, minArea, maxArea, approxPolygons}) ->
+  socket.on 'frame', ({data, useCanny, lowThresh, highThresh, nIters, minArea, maxArea,
+      approxPolygons, useHSV, lowerHSV, upperHSV, dilate}) ->
     return unless typeof(data) is 'string'
     data = data?.split(',')?[1]
 
+    useCanny    ?= true
     lowThresh   ?= 0
     highThresh  ?= 100
     nIters      ?= 2
     minArea     ?= 500
     maxArea     ?= Infinity
     approxPolygons ?= false
+    lowerHSV    ?= [170, 100, 0]
+    upperHSV    ?= [180, 255, 255]
+    dilate      ?= true
 
     # feed the data into OpenCV
     cv.readImage (new Buffer data, 'base64'), (err, im) ->
 
-      im.convertGrayscale()         # for now, use grayScale. When we start dealing with colors, conv. to HSV
-      im_canny = im.copy()
+      im.convertHSVscale()
 
-      im_canny.canny(lowThresh, highThresh)
-      im_canny.dilate(nIters)
+      if useHSV
+        im.inRange(lowerHSV, upperHSV)    # filter colors
 
-      contours = im_canny.findContours()
+      if useCanny
+        im.canny(lowThresh, highThresh)
+
+      if dilate
+        im.dilate(nIters)
+
+      contours = im.findContours()
 
       data = {contours: [], size: contours.size()}
       for c in [0...contours.size()]

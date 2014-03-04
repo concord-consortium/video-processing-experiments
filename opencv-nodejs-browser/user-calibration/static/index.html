@@ -54,15 +54,51 @@
       border-radius: 10px;
       box-shadow: 0px, 5px, 10px black;
     }
+    .calibration-set {
+      position: relative;
+      clear: both;
+      border: 1px solid #BBB;
+      padding-bottom: 5px;
+      margin-top: 7px;
+    }
     label {
       padding: 5px;
       padding-bottom: 26px;
+    }
+    .use-calibration {
+      padding-top: 5px;
+    }
+    .use-calibration input {
+      float: left; margin: 6px;
+    }
+    .use-calibration label {
+      float: left;
+      padding-bottom: 10px;
     }
     .ui-rangeSlider-label {
       background-image: none;
     }
     .ui-rangeSlider .ui-rangeSlider-bar {
       background-color: rgba(43, 166, 203, 0.6);
+    }
+    #hue-values {
+      position: absolute;
+      top: 80px;
+      width: 363px;
+      height: 31px;
+      margin-left: 11px;
+      background: -moz-linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+      background: -ms-linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+      background: -o-linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+      background: -webkit-gradient(linear, left top, right top, from(#ff0000), color-stop(0.17, #ffff00), color-stop(0.33, #00ff00), color-stop(0.5, #00ffff), color-stop(0.67, #0000ff), color-stop(0.83, #ff00ff), to(#ff0000));
+      background: -webkit-linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+      background: linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+    }
+    #hue-slider {
+      opacity: 0.8;
+    }
+    #hue-slider .ui-rangeSlider-innerBar{
+      opacity: 0.3;
     }
   </style>
 </head>
@@ -77,14 +113,37 @@
     </header>
     <div class="row">
       <div class="large-5 columns">
-        <label>Canny Edge-Detection Thresholds</label>
-        <div id="canny-slider"></div>
-        <input type="checkbox" name="checkbox" id="use-ratio" style="float: left; margin: 6px;">
-        <label for="use-ratio" style="float: left;">Use constant ratio:</label>
-        <input id="ratio" size="3" value="3" />
+        <div class="calibration-set">
+          <div class="use-calibration">
+            <input type="checkbox" name="checkbox" id="use-canny" checked="true">
+            <label for="use-canny"><b>Use Canny Edge-Detection</b></label>
+          </div>
+          <label style="clear: both">Canny Edge-Detection Thresholds</label>
+          <div id="canny-slider"></div>
+          <input type="checkbox" name="checkbox" id="use-ratio" style="float: left; margin: 6px;">
+          <label for="use-ratio" style="float: left;">Use constant ratio:</label>
+          <input id="ratio" size="3" value="3" />
+        </div>
+        <div class="calibration-set">
+          <div class="use-calibration">
+            <input type="checkbox" name="checkbox" id="use-hsv">
+            <label for="use-hsv"><b>Use HSV Color Thresholds</b></label>
+          </div>
+          <label style="clear: both">Hue</label>
+          <div id="hue-values"></div>
+          <div id="hue-slider"></div>
+          <label style="padding-top: 9px;">Saturation</label>
+          <div id="saturation-slider"></div>
+          <label>Value</label>
+          <div id="value-slider"></div>
+        </div>
+        <div class="use-calibration">
+          <input type="checkbox" name="checkbox" checked="true" id="use-dilate">
+          <label for="use-dilate">Dilate shapes</label>
+        </div>
         <label style="clear: both">Area Size Limits</label>
         <div id="area-slider"></div>
-        <div style="padding-top: 25px">
+        <div class="use-calibration">
           <input type="checkbox" name="checkbox" id="approx-ploygons" style="float: left; margin: 6px;">
           <label for="approx-ploygons" style="float: left;">Approximate polygons</label>
         </div>

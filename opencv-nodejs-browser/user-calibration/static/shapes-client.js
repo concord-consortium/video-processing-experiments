@@ -9,7 +9,18 @@ $(function() {
       contours = [],
 
       debug = document.querySelector('#debug'),
-      debugBtn = document.querySelector('#debugBtn');
+      debugBtn = document.querySelector('#debugBtn'),
+
+      useCanny = true,
+      useRatio = false,
+      lastMin = 0,
+      lastMax = 300,
+      useHSV = false,
+      lowerHSV = [],
+      upperHSV = [],
+      dilate = true,
+      maxArea = 500,
+      approxPolygons = false;
 
   navigator.getMedia = (navigator.getUserMedia ||
                          navigator.webkitGetUserMedia ||
@@ -76,15 +87,30 @@ $(function() {
         }
       }
 
-      var maxArea = $("#area-slider").rangeSlider("max");
+      maxArea = $("#area-slider").rangeSlider("max");
       if (maxArea == 15050) maxArea = Infinity;
+      lowerHSV = [
+        $("#hue-slider").rangeSlider("min"),
+        $("#saturation-slider").rangeSlider("min"),
+        $("#value-slider").rangeSlider("min")
+      ];
+      upperHSV = [
+        $("#hue-slider").rangeSlider("max"),
+        $("#saturation-slider").rangeSlider("max"),
+        $("#value-slider").rangeSlider("max")
+      ];
       socket.emit('frame',
         {
           data: canvas.toDataURL("image/jpeg"),
-          lowThresh: $("#canny-slider").rangeSlider("min"),
+          useCanny:   useCanny,
+          useHSV:     useHSV,
+          lowThresh:  $("#canny-slider").rangeSlider("min"),
           highThresh: $("#canny-slider").rangeSlider("max"),
-          minArea: $("#area-slider").rangeSlider("min"),
-          maxArea: maxArea,
+          lowerHSV:   lowerHSV,
+          upperHSV:   upperHSV,
+          dilate:     dilate,
+          minArea:    $("#area-slider").rangeSlider("min"),
+          maxArea:    maxArea,
           approxPolygons: approxPolygons
         });
     }, 1000 / fps);
@@ -92,10 +118,13 @@ $(function() {
   captureAndDraw();
 
   // *** jQuery widget setup ***
-  var useRatio = false,
-      lastMin = 0,
-      lastMax = 300,
-      approxPolygons = false;
+
+  $('#use-canny').on('click', function(i, val) {
+    useCanny = this.checked;
+    if (!useCanny && !useHSV) {
+      $("#use-hsv").click();
+    }
+  });
   $('#canny-slider').rangeSlider({bounds: {min: 0, max: 300}, defaultValues: {min: 0, max: 100}});
   $("#canny-slider").bind("userValuesChanged", function(e, data){
     if (useRatio) {
@@ -114,11 +143,6 @@ $(function() {
       lastMax = data.values.max;
     }
   });
-  $('#area-slider').rangeSlider({bounds: {min: 0, max: 15050}, step: 50, defaultValues: {min: 500, max: 15050},
-    formatter:function(val){
-      return val == 15050 ? "Unlimited" : val.toString();
-    }
-  });
   $('#use-ratio').on('click', function(i, val) {
     useRatio = this.checked;
     var ratio = +$("#ratio").val(),
@@ -127,5 +151,22 @@ $(function() {
   });
   $('#approx-ploygons').on('click', function(i, val) {
     approxPolygons = this.checked;
+  });
+  $("#use-hsv").on('click', function(i, val) {
+    useHSV = this.checked;
+    if (!useCanny && !useHSV) {
+      $("#use-canny").click();
+    }
+  });
+  $('#hue-slider').rangeSlider({bounds: {min: 0, max: 180}, defaultValues: {min: 160, max: 180}});
+  $('#saturation-slider').rangeSlider({bounds: {min: 0, max: 255}, defaultValues: {min: 100, max: 255}});
+  $('#value-slider').rangeSlider({bounds: {min: 0, max: 255}, defaultValues: {min: 0, max: 255}});
+  $('#use-dilate').on('click', function(i, val) {
+    dilate = this.checked;
+  });
+  $('#area-slider').rangeSlider({bounds: {min: 0, max: 15050}, step: 50, defaultValues: {min: 500, max: 15050},
+    formatter:function(val){
+      return val == 15050 ? "Unlimited" : val.toString();
+    }
   });
 });
