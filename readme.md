@@ -8,7 +8,7 @@ It was created by [The Concord Consortium](http://www.concord.org) for the
 
 All code should be considered alpha-quality.
 
-# Examples
+## Examples
 
 ### opencv
 
@@ -16,14 +16,18 @@ Color detection and shape tracking using OpenCV.
 
 ### opencv-nodejs-browser
 
-Shape detection in the browser using WebRTC sent to OpenCV via node-opencv.
+Image processing in the browser using WebRTC sent to OpenCV via node-opencv.
 
-# Contributing
+* **shape-detection** — Edge-detection using Canny, and polygon approximation
+* **color-detection** — HSV color-detection
+* **user-calibration** — Extension of the above with calibration sliders
+
+##  Contributing
 
 If you would like to add an example or improve upon an existing example,
 please fork the repository and submit a pull request.
 
-# License
+## License
 
 This is free and unencumbered software released into the public domain. Anyone is
 free to copy, modify, publish, use, compile, or distribute this software.
