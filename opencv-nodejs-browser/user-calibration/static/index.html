@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+  <title>Shape detection: Node.js, Socket.IO, OpenCV, Canvas</title>
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+  <script src="lib/jQRangeSlider-min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/foundation/4.2.2/css/foundation.min.css">
+  <link href='style/ui-lightness/jquery-ui-1.10.4.custom.min.css' rel='stylesheet' type='text/css'>
+  <link href='style/jq-rangeslider/classic-min.css' rel='stylesheet' type='text/css'>
+  <meta charset=utf-8>
+  <style type="text/css">
+    body {
+      background-color: white;
+    }
+    #debug {
+      background: #303030;
+      border-radius: 10px;
+      color: white;
+      font-size: 22px;
+      display: none;
+      padding: 10px;
+      overflow-x: none;
+      overflow-y: auto;
+      height: 200px;
+      word-wrap: break-word;
+    }
+    .footer {
+      height: 128px;
+      color: black;
+    }
+    header {
+      background-color: #2ba6cb;
+      color: white;
+      box-shadow: 0px 2px 2px #004080;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      color: white;
+    }
+    h1, h2, h3, h4, h5 {
+      color: #2ba6cb;
+    }
+    header h1, header h2, header h3, header h4, header h5 {
+      color: white;
+      text-shadow: 0px, 5px, 10px black;
+    }
+    #live, #canvas {
+      display: none;
+    }
+    canvas {
+      padding: 5px;
+      border: solid 5px #2ba6cb;
+      // background-color: #2ba6cb;
+      border-radius: 10px;
+      box-shadow: 0px, 5px, 10px black;
+    }
+    label {
+      padding: 5px;
+      padding-bottom: 26px;
+    }
+    .ui-rangeSlider-label {
+      background-image: none;
+    }
+    .ui-rangeSlider .ui-rangeSlider-bar {
+      background-color: rgba(43, 166, 203, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <header>
+      <div class="row">
+        <div class="large-8 columns">
+          <h1>OpenCV Testing</h1>
+        </div>
+      </div>
+    </header>
+    <div class="row">
+      <div class="large-5 columns">
+        <label>Canny Edge-Detection Thresholds</label>
+        <div id="canny-slider"></div>
+        <input type="checkbox" name="checkbox" id="use-ratio" style="float: left; margin: 6px;">
+        <label for="use-ratio" style="float: left;">Use constant ratio:</label>
+        <input id="ratio" size="3" value="3" />
+        <label style="clear: both">Area Size Limits</label>
+        <div id="area-slider"></div>
+        <div style="padding-top: 25px">
+          <input type="checkbox" name="checkbox" id="approx-ploygons" style="float: left; margin: 6px;">
+          <label for="approx-ploygons" style="float: left;">Approximate polygons</label>
+        </div>
+      </div>
+      <div class="large-7 columns">
+        <canvas id="canvas2" width="480" height="360"></canvas>
+        <br>
+        <button id="debugBtn" class="round success">Open Debug</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="large-12 columns">
+      <pre id="debug">
+      </pre>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="row">
+      <div class="large-12 columns">
+      </div>
+    </div>
+  </div>
+  <video id="live" width="480" height="360" autoplay></video>
+  <canvas id="canvas" width="480" height="360" style></canvas>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/shapes-client.js"></script>
+</body>
+</html>
