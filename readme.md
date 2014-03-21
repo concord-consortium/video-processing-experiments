@@ -22,6 +22,12 @@ Image processing in the browser using WebRTC sent to OpenCV via node-opencv.
 * **color-detection** — HSV color-detection
 * **user-calibration** — Extension of the above with calibration sliders
 
+### js-canvas
+
+Image processing using pure Javascript on the canvas
+
+* **color-detection** - Color detection and contour-finding
+
 ##  Contributing
 
 If you would like to add an example or improve upon an existing example,
