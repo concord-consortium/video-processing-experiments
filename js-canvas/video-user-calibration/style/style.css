@@ -16,7 +16,6 @@ h3 {
   text-align: center;
   color: #777;
   margin-top: 10px;
-  margin-bottom: -14px;
 }
 canvas {
   padding: 5px;
@@ -30,8 +29,9 @@ canvas {
 }
 .calibration-set {
   position: relative;
-  width: 410px;
-  clear: both;
+  width: 408px;
+  float: left;
+  margin-right: 9px;
   border: 1px solid #BBB;
   padding-bottom: 5px;
   margin-top: 7px;
@@ -45,6 +45,9 @@ label {
   display: block;
   font-weight: bold;
   margin-bottom: 0.1875em;
+}
+input[type="checkbox"] {
+  clear: both;
 }
 .use-calibration {
   padding-top: 5px;

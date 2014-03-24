@@ -21,7 +21,7 @@
       <canvas id="canvas2" width="400" height="300"></canvas>
       <canvas id="canvas3" width="400" height="300"></canvas>
       <div class="calibration-set">
-        <h3>Color filtering</h3>
+        <h3 style="margin-bottom: -14px;">Color filtering</h3>
         <label style="clear: both">Hue</label>
         <div id="hue-values"></div>
         <div id="hue-slider"></div>
@@ -29,6 +29,15 @@
         <div id="saturation-slider"></div>
         <label>Value</label>
         <div id="value-slider"></div>
+      </div>
+      <div class="calibration-set">
+        <h3>Contour detection</h3>
+        <input type="checkbox" name="checkbox" id="extra-erode-dilate" checked="checked" style="float: left; margin: 6px;">
+        <label for="extra-erode-dilate" style="float: left;">Extra erode-dilate cycles (noise removal)</label>
+        <input type="checkbox" name="checkbox" id="approx-polygons" style="float: left; margin: 6px;">
+        <label for="approx-polygons" style="float: left;">Approximate polygons (lower res)</label>
+        <input type="checkbox" name="checkbox" id="convex-hull" style="float: left; margin: 6px;">
+        <label for="convex-hull" style="float: left;">Convex Hull</label>
       </div>
   </body>
 </html>

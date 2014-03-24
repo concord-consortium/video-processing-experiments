@@ -4,6 +4,12 @@ $(function() {
       ctx1 = canvas1.getContext('2d'),
       ctx2 = canvas2.getContext('2d'),
       ctx3 = canvas3.getContext('2d'),
+      hueSlider = $('#hue-slider'),
+      satSlider = $('#saturation-slider'),
+      valSlider = $('#value-slider'),
+      extraErodeCheck = document.getElementById('extra-erode-dilate'),
+      approxPolygonsCheck = document.getElementById('approx-polygons'),
+      conxevHullCheck = document.getElementById('convex-hull'),
       minH = 0,
       maxH = 360,
       minS = 0,
@@ -13,9 +19,9 @@ $(function() {
       hsvThreshold = new HSVThreshold(minH, maxH, minS, maxS, minV, maxV);
 
   // set up sliders
-  $('#hue-slider').rangeSlider({bounds: {min: 0, max: 360}, defaultValues: {min: minH, max: maxH}});
-  $('#saturation-slider').rangeSlider({bounds: {min: 0, max: 100}, defaultValues: {min: minS*100, max: maxS*100}});
-  $('#value-slider').rangeSlider({bounds: {min: 0, max: 100}, defaultValues: {min: minV*100, max: maxV*100}});
+  hueSlider.rangeSlider({bounds: {min: 0, max: 360}, defaultValues: {min: minH, max: maxH}});
+  satSlider.rangeSlider({bounds: {min: 0, max: 100}, defaultValues: {min: minS*100, max: maxS*100}});
+  valSlider.rangeSlider({bounds: {min: 0, max: 100}, defaultValues: {min: minV*100, max: maxV*100}});
 
   $('#hue-slider, #saturation-slider, #value-slider').on("valuesChanging", function(){
     minH = $("#hue-slider").rangeSlider("min");
@@ -44,7 +50,7 @@ $(function() {
     var imgData, data, len, i, mask,
         r, g, b,
         inRange, image2, image3, erodedImg,
-        contours, points;
+        contours, points, p;
     ctx1.drawImage(video, 0, 0, 480, 360);
     imgData = ctx1.getImageData(0, 0, 400, 300);
     data = imgData.data;
@@ -78,10 +84,13 @@ $(function() {
     erodedImg = new CV.Image();
     CV.erode(mask, erodedImg);
     CV.dilate(erodedImg, mask);
-    CV.dilate(mask, erodedImg);
-    CV.dilate(erodedImg, mask);
-    CV.erode(mask, erodedImg);
-    CV.erode(erodedImg, mask);
+
+    if (extraErodeCheck.checked) {
+      CV.dilate(mask, erodedImg);
+      CV.dilate(erodedImg, mask);
+      CV.erode(mask, erodedImg);
+      CV.erode(erodedImg, mask);
+    }
 
     // draw image to canvas 3
     image3 = createDrawableImage(mask, canvas3.getContext('2d').getImageData(0, 0, 400, 300));
@@ -90,24 +99,31 @@ $(function() {
     // find contours and draw to canvas 3
     contours = CV.findContours(mask);
 
-    for (var i in contours) {
-      var points = contours[i];
+    if (approxPolygonsCheck.checked) {
+      for (i in contours) {
+        contours[i] = CV.approxPolyDP(contours[i], 4);
+      }
+    }
+
+    if (conxevHullCheck.checked) {
+      for (i in contours) {
+        contours[i] = CV.convexHull(contours[i]);
+      }
+    }
+
+    for (i in contours) {
+      points = contours[i];
 
       if (points && points.length) {
         ctx3.beginPath();
         ctx3.moveTo(points[0].x, points[0].y);
-        for (var p = 1; p < points.length; p++) {
+        for (p = 1; p < points.length; p++) {
           ctx3.lineTo(points[p].x, points[p].y);
         }
         ctx3.closePath();
         ctx3.lineWidth = 3;
-        if (points.length == 4) {
-          ctx3.strokeStyle = "#a22";
-        } else if (points.length == 3) {
-          ctx3.strokeStyle = "#2a2";
-        } else {
-          ctx3.strokeStyle = "#2ba6cb";
-        }
+        ctx3.strokeStyle = "#2ba6cb";
+
         ctx3.stroke();
       }
     }
