@@ -1,0 +1,84 @@
+body {
+  background-color: white;
+  font-family: Helvetica;
+}
+header {
+  color: white;
+  background-color: #2ba6cb;
+  box-shadow: 0px 2px 2px #004080;
+  padding: 10px;
+  padding-left: 50px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+h3 {
+  text-align: center;
+  color: #777;
+  margin-top: 10px;
+  margin-bottom: -14px;
+}
+canvas {
+  padding: 5px;
+  border: solid 2px #2ba6cb;
+  // background-color: #2ba6cb;
+  border-radius: 10px;
+  box-shadow: 0px, 5px, 10px black;
+}
+#live {
+  display: none;
+}
+.calibration-set {
+  position: relative;
+  width: 410px;
+  clear: both;
+  border: 1px solid #BBB;
+  padding-bottom: 5px;
+  margin-top: 7px;
+}
+label {
+  padding: 5px;
+  padding-bottom: 25px;
+  font-size: 0.875em;
+  color: #4d4d4d;
+  cursor: pointer;
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.1875em;
+}
+.use-calibration {
+  padding-top: 5px;
+  clear: both;
+}
+.use-calibration input {
+  float: left; margin: 6px;
+}
+.use-calibration label {
+  float: left;
+  padding-bottom: 10px;
+}
+.ui-rangeSlider-label {
+  background-image: none;
+}
+.ui-rangeSlider .ui-rangeSlider-bar {
+  background-color: rgba(43, 166, 203, 0.6);
+}
+#hue-values {
+  position: absolute;
+  top: 63px;
+  width: 380px;
+  height: 31px;
+  margin-left: 15px;
+  background: -moz-linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+  background: -ms-linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+  background: -o-linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+  background: -webkit-gradient(linear, left top, right top, from(#ff0000), color-stop(0.17, #ffff00), color-stop(0.33, #00ff00), color-stop(0.5, #00ffff), color-stop(0.67, #0000ff), color-stop(0.83, #ff00ff), to(#ff0000));
+  background: -webkit-linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+  background: linear-gradient(left, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+}
+#hue-slider {
+  opacity: 0.8;
+}
+#hue-slider .ui-rangeSlider-innerBar{
+  opacity: 0.7;
+}
