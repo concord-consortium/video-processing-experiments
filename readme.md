@@ -27,6 +27,7 @@ Image processing in the browser using WebRTC sent to OpenCV via node-opencv.
 Image processing using pure Javascript on the canvas
 
 * **color-detection** - Color detection and contour-finding
+* **color-detection2** - Faster color detection and contour-finding
 
 ##  Contributing
 
