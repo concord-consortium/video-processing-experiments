@@ -28,7 +28,7 @@ Image processing using pure Javascript on the canvas
 
 * **color-detection** - Color detection and contour-finding
 * **color-detection2** - Faster color detection and contour-finding
-* **video-user-calibration** - Processing of video feed plus in-page calibrations
+* **video-user-calibration** - Processing of video feed plus in-page calibrations ([Live version here](http://concord-consortium.github.io/video-processing-experiments/))
 
 ##  Contributing
 
